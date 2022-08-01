@@ -1,0 +1,5 @@
+
+Crypto
+    // use bcryptjs to crypt the password 
+
+    
