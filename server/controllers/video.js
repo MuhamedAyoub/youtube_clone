@@ -10,7 +10,7 @@ export const addVideo = async (req, res, next) => {
     ...req.body,
   });
   try {
-    const video = await newVideo.save();
+    await newVideo.save();
     res.status(200).json("Video add Seccess");
   } catch (ex) {
     next(ex);
@@ -55,11 +55,10 @@ export const DeleteVideo = async (req, res, next) => {
 export const getVideo = async (req, res, next) => {
   try {
     const video = await Video.findById(req.params.id);
-    if (video) res.status(200).json(video);
-    else next(createError(404, "Video Not Found!"));
+    res.status(200).json(video);
   } catch (ex) {
     next(ex);
-  }
+  } 
 };
 export const IncVideoViews = async (req, res, next) => {
   try {

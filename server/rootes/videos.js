@@ -17,7 +17,7 @@ const router = express.Router();
 router.post("/", verifyToken, addVideo);
 router.put("/:id", verifyToken, UpdateVideo);
 router.delete("/:id", verifyToken, DeleteVideo);
-router.get("/find/:id", verifyToken, getVideo);
+router.get("/find/:id", getVideo);
 router.put("/views/:id", IncVideoViews);
 router.get("/random", randomVideos);
 router.get("/trend", getTrendVideo);

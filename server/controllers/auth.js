@@ -38,3 +38,31 @@ export const signin = async (req, res, next) => {
     next(except);
   }
 };
+export const googleAuth = async (req, res, next) => {
+  try {
+    const user = await User.findOne({ email: req.body.email });
+    if (user) {
+      // ! create cookies
+      const token = user.generateAuthToken();
+      res
+        .cookie("access_token", token, {
+          httpOnly: true,
+        })
+        .status(200)
+        .json(user._doc);
+    } else {
+      const user = new User({ ...req.body, fromGoogle: true });
+      const savedUser = await user.save();
+      // * thene create token
+      const token = savedUser.generateAuthToken();
+      res
+        .cookie("access_token", token, {
+          httpOnly: true,
+        })
+        .status(200)
+        .json(savedUser._doc);
+    }
+  } catch (err) {
+    next(err);
+  }
+};

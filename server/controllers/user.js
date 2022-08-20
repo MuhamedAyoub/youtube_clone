@@ -39,7 +39,7 @@ export const Delete = async (req, res, next) => {
 export const getUser = async (req, res, next) => {
   try {
     const user = await User.findById(req.params.id);
-    if (user) res.status(200).json(user);
+    res.status(200).json(user);
   } catch (ex) {
     next(ex);
   }
@@ -64,7 +64,7 @@ export const subscribe = async (req, res, next) => {
 export const unsubscribe = async (req, res, next) => {
   try {
     await User.findByIdAndUpdate(req.user.id, {
-      $pop: {
+      $pull: {
         subscribedUsers: req.params.id,
       },
     });
